@@ -17,6 +17,7 @@ suppressMessages({
   library(ggplot2)
   library(gridExtra)
   library(cluster)
+  library(RColorBrewer)
 })
 ```
 
@@ -280,9 +281,10 @@ ggplot(album_df, aes(x = "User Score", y = user_score)) +
 
 We employ a facet grids to visualize the distribution of the categorical features by scores.
 
-```{r fig.height=8}
+```{r fig.width = 8}
 # Define the list of categorical columns
-categorical_cols <- c("key", "mode", "explicit", "key_name", "mode_name")
+# categorical_cols <- c("key", "mode", "explicit", "key_name", "mode_name")
+categorical_cols <- c("explicit", "key_name", "mode_name") # remove "key" and "mode" because they're just "key_name" and "mode_name" but in numerical form.
 
 # Create facet grid plots for each score
 for (score in c("metacritic_score", "user_score")) {
@@ -307,7 +309,7 @@ for (score in c("metacritic_score", "user_score")) {
   }
   
   # Combine plots into a single facet grid
-  grid.arrange(grobs = plots, nrow = 3, ncol = 2)  
+  grid.arrange(grobs = plots, nrow = 2, ncol = 2)  
   # Adjust nrow and ncol as needed
 }
 
@@ -426,6 +428,25 @@ selected_numerical_feats_and_user_score_df <-
   album_song_with_scores_df[selected_columns_user]
 ```
 
+```{r}
+# Plot correlation matrix again, graying out all cells with correlation smaller then +- 0.5
+thresholded_corr_mat = correlation_matrix
+thresholded_corr_mat[abs(thresholded_corr_mat) < 0.3] <- NA
+corrplot(thresholded_corr_mat, method="color", col=colorRampPalette(c("red", "white", "blue"))(200), na.label = " ")
+```
+
+```{r}
+highly_correlated = unique(c(c("metacritic_score", "user_score"), most_correlated_metacritic, most_correlated_user))
+salient_numerical_feats_and_scores_df = numerical_feats_and_scores_df[highly_correlated]
+
+# Compute the correlation matrix
+correlation_matrix <- cor(salient_numerical_feats_and_scores_df)[, c(1, 2)]
+
+# Visualize the correlation matrix using corrplot
+corrplot(correlation_matrix, method = "circle", cl.pos = "n")
+
+colorlegend(xlim=c(3,4), ylim=c(0.5,9.5), colorRampPalette(brewer.pal(8, "RdBu"))(200), c(seq(-1,1,.25)), align="l", vertical=TRUE, addlabels=TRUE)
+```
 
 
 # 5. Regression Analysis 
