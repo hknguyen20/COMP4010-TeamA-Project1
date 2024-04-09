@@ -225,7 +225,7 @@ ggplot(album_df, aes(x = "User Score", y = user_score)) +
 
 We employ a facet grids to visualize the distribution of the categorical features by scores.
 
-```{r}
+```{r fig.height=8}
 # Define the list of categorical columns
 categorical_cols <- c("key", "mode", "explicit", "key_name", "mode_name")
 
@@ -252,7 +252,7 @@ for (score in c("metacritic_score", "user_score")) {
   }
   
   # Combine plots into a single facet grid
-  grid.arrange(grobs = plots, nrow = 2, ncol = 3)  
+  grid.arrange(grobs = plots, nrow = 3, ncol = 2)  
   # Adjust nrow and ncol as needed
 }
 
