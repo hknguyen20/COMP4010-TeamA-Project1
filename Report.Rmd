@@ -41,7 +41,7 @@ The selected dataset comprises comprehensive data on Taylor Swift's discography,
 |time_signature      |integer   |An estimated time signature. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure). The time signature ranges from 3 to 7 indicating time signatures of "3/4", to "7/4".     |
 |duration_ms         |integer   |The duration of the track in milliseconds.       |
 |explicit            |logical   |Does the track have explicit lyrics.           |
-|key_name            |character |The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.         |
+|key_name            |character |The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C#/D$\flat$, 2 = D, and so on. If no key was detected, the value is -1.         |
 |mode_name           |character |Modality of the track.           |
 |key_mode            |character |The key of the track.       |
 |lyrics              |list      |Track lyrics. These values are all NA. To get the lyrics in nested tibbles, `install.packages("taylor")` and use the source data.|
@@ -75,7 +75,7 @@ The selected dataset comprises comprehensive data on Taylor Swift's discography,
 |time_signature      |integer   |An estimated time signature. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure). The time signature ranges from 3 to 7 indicating time signatures of "3/4", to "7/4".     |
 |duration_ms         |integer   |The duration of the track in milliseconds.       |
 |explicit            |logical   |Does the track have explicit lyrics.           |
-|key_name            |character |The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.         |
+|key_name            |character |The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C#/D$\flat$, 2 = D, and so on. If no key was detected, the value is -1.         |
 |mode_name           |character |Modality of the track.           |
 |key_mode            |character |The key of the track.       |
 |lyrics              |list      |Track lyrics. These values are all NA. To get the lyrics in nested tibbles, `install.packages("taylor")` and use the source data.|
