@@ -1,5 +1,5 @@
 ---
-title: "Project"
+title: "Data Visualizaton Project Write-Up"
 output:
   pdf_document: default
   html_document: default
@@ -19,6 +19,7 @@ suppressMessages({
   library(cluster)
 })
 ```
+
 
 # Introduction
 
@@ -64,6 +65,61 @@ With the hypothesis that audio features (numerical and categorical values) and t
 - Since we lack scores for individual songs, it is reasonable to assign each song the score from "taylor_album_songs.csv" based on the score for the entire album in "taylor_albums.csv."
 
 - One might suggest that we can aggregate all song features to represent an album, using that representation as input features to predict the scores. For simplicity, we will use the mean and median as the statistical measures to aggregate all the songs. However, the current size of the dataset that we can retrieve is relatively small (~12 valid records), which theoretically can be challenging to fit a regression model. Hence, we would like to discuss the potential of using such representation without fitting a specific model in our implementation.
+
+# Answering the questions
+## Question 1: How are the audio features distributed?
+### Approach
+
+To understand the distribution of audio features, our approach is structured into three main steps. 
+1. **Descriptive Statistics** (Section 1): Initially, we delve into the distribution of the audio features through descriptive statistics to get a broad overview of their general characteristics.
+2. **Feature Distribution by Scores** (Section 2): Subsequently, we explore how the distribution of features varies with scores, paying particular attention to the distribution of categorical features with respect to scores.
+3. **Time-Series Analysis of Scores** (Section 3): Lastly, we analyze the scores over time to identify any temporal patterns or trends in the data.
+
+Our analysis reveals that Section 2 contains some of the most compelling insights, particularly in relation to how categorical features are distributed across different scores.
+
+Given the presence of multiple categorical features, and our interest in examining how scores are distributed for each category, we find that facet grids are particularly well-suited for this analysis. Facet grids offer a concise and comprehensive graphical representation that encompasses all categories, making it easier to identify patterns and outliers.
+
+### Analysis
+Please refer to Section 2 for additional details on the code, graphs, and findings.
+
+
+### Discussion
+
+The graph clearly illustrates that songs in a major mode tend to have higher scores than those in a minor mode, indicating a preference for Taylor’s compositions in a major key. This finding suggests a pattern in the composition of well-received music, particularly in the context of the artist in question. Furthermore, it is observed that, as Taylor roots in country music, the most commonly used keys are G, C, E, D, and A. This choice of keys may reflect both the genre's traditional sound and her personal style and preferences.
+
+
+## Question 2: How do numerical audio features of each song affect the overall rating?
+### Approach
+To examine the relationship between audio features and song ratings, we employ a correlation matrix (Section 4). This matrix helps in identifying how each audio feature correlates with the ratings, providing insights into which features have the most significant impact on the overall score.
+
+The correlation between two variables is calculated using the Pearson correlation coefficient, which is represented by the formula:
+
+$$ r = \frac{n(\sum xy) - (\sum x)(\sum y)}{\sqrt{[n\sum x^2 - (\sum x)^2][n\sum y^2 - (\sum y)^2]}} $$
+
+Where:
+
+- `r` is the correlation coefficient,
+
+- `n` is the number of observations,
+
+- `x` and `y` are the variables being analyzed,
+
+- $\sum xy$ is the sum of the product of paired scores,
+
+- $\sum x$ and $\sum y$ are the sums of the scores, and
+
+- $\sum x^2$ and $\sum y^2$ are the sums of the squared scores.
+
+### Analysis
+Please refer to Section 4 for additional details on the code, graphs, and findings.
+
+### Discussion
+
+The analysis of the correlation matrix reveals the following features to be most correlated with the `metacritic_score`: `user_score`, `loudness`, `acousticness`, `energy`, `duration_ms`, and `liveness`.
+
+Moreover, when focusing on the `user_score`, the features with the highest correlation include `metacritic_score`, `speechiness`, `duration_ms`, `danceability`, `acousticness`, and `liveness`.
+
+It becomes evident from this analysis that attributes such as `danceability`, `acousticness`, and `liveness` play significant roles in how users rate songs. These features, indicative of the song's rhythm, natural sound, and the presence of a live audience, respectively, are crucial in determining a song's appeal to listeners. This insight underscores the importance of these audio characteristics in the composition and production of music aimed at achieving high user ratings.
 
 
 # Dataset Preprocessing
@@ -124,7 +180,6 @@ categorical_feats = c("explicit", "key", "key_name", "mode",
 
 # 2 target numerical columns: metacritic_score VS user_score
 ```
-
 
 # 1. Descriptive Statistics
 
